@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.mapper.LandTicketMapper">
+
+    <!-- 查询所有land tickets -->
+    <select id="findAll" resultType="LandTicket">
+        SELECT * FROM landticket
+    </select>
+
+    <!-- 根据ID查询land ticket -->
+    <select id="findById" parameterType="int" resultType="LandTicket">
+        SELECT * FROM landticket WHERE landTicketId = #{landTicketId}
+    </select>
+
+    <!-- 插入新的land ticket -->
+    <insert id="insert" parameterType="LandTicket">
+        INSERT INTO landticket (landTicketId, landName, uid, date, time, purchaseDate, landImg)
+        VALUES (#{landTicketId}, #{landName}, #{uid}, #{date}, #{time}, #{purchaseDate}, #{landImg})
+    </insert>
+
+    <!-- 更新现有的land ticket -->
+    <update id="update" parameterType="LandTicket">
+        UPDATE landticket
+        SET landName = #{landName}, uid = #{uid}, date = #{date}, time = #{time}, purchaseDate = #{purchaseDate}, landImg = #{landImg}
+        WHERE landTicketId = #{landTicketId}
+    </update>
+
+    <!-- 根据ID删除land ticket -->
+    <delete id="delete" parameterType="int">
+        DELETE FROM landticket WHERE landTicketId = #{landTicketId}
+    </delete>
+</mapper>

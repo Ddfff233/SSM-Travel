@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.UserMapper">
+
+    <!--用于登入验证-->
+    <select id="findUser" parameterType="User" resultType="User">
+        select *
+        from user
+        where username = #{user.username} and
+              password =#{user.password}
+    </select>
+
+    <!--用于注册时用户名重复性验证-->
+    <select id="isBingUser" parameterType="User" resultType="User">
+        select *
+        from user
+        where username = #{user.username}
+    </select>
+    <!--根据id删除用户-->
+     <delete id="delete" parameterType="integer">
+         delete from user where uid = #{uid}
+     </delete>
+
+    <!--用于管理员用户管理-->
+    <select id="findAll" resultType="com.project.pojo.User">
+        select * from user where authority="user"
+    </select>
+    <!--修改-->
+    <update id="update" parameterType="user">
+        update user
+        set
+            username = #{username},password = #{password},phone = #{phone},authority =#{authority}
+        where uid =#{uid}
+    </update>
+    <!--<resultMap id="MapUser" type="com.project.pojo.User">-->
+    <!--    <id property="uid" column="uid"/>-->
+    <!--    <result property="username" column="username"/>-->
+    <!--    <result property="password" column="password"/>-->
+    <!--    <result property="address" column="address"/>-->
+    <!--    <result property="mail" column="mail"/>-->
+    <!--    <result property="phone" column="phone"/>-->
+    <!--    <result property="authority" column="authority"/>-->
+    <!--</resultMap>-->
+
+    <!--用于注册写入数据库-->
+    <insert id="insertUser" parameterType="com.project.pojo.User">
+        insert into user (username,password,phone,authority)
+        values (#{username,jdbcType=VARCHAR},
+                #{password,jdbcType=VARCHAR},
+                #{phone,jdbcType=VARCHAR},
+                #{authority,jdbcType=VARCHAR})
+    </insert>
+
+</mapper>
